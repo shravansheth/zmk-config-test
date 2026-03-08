@@ -1,0 +1,41 @@
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+        zmk,matrix-transform = &default_transform;
+    };
+
+    kscan0: kscan {
+        compatible = "zmk,kscan-gpio-direct";
+        wakeup-source;
+        debounce-press-ms = <5>;
+        debounce-release-ms = <5>;
+
+        input-gpios = <
+            &xiao_d 0 (GPIO_PULL_UP | GPIO_ACTIVE_LOW) /* D0 */
+            &xiao_d 1 (GPIO_PULL_UP | GPIO_ACTIVE_LOW) /* D1 */
+        >;
+    };
+
+    default_transform: matrix_transform {
+        compatible = "zmk,matrix-transform";
+        rows = <1>;
+        columns = <2>;
+        map = <0 1>;
+    };
+
+    /* encoder not wired yet — uncomment when ready
+    left_encoder: left_encoder {
+        compatible = "alps,ec11";
+        a-gpios = <&xiao_d 5 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>; // D5
+        b-gpios = <&xiao_d 6 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>; // D6
+        steps = <24>;
+        status = "okay";
+    };
+
+    sensors: sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&left_encoder>;
+        triggers-per-rotation = <24>;
+    };
+    */
+};
